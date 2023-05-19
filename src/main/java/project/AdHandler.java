@@ -2,8 +2,6 @@ package project;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.text.StringCharacterIterator;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -55,7 +53,12 @@ public class AdHandler {
         }
 
         AdData adData = new AdData(description, type, seller, LocalDateTime.now());
-        this.allAdsList.add(adData);
+
+        List<AdData> list = new ArrayList<>();
+        list.add(adData);
+        this.allAdsList = list;
+
+        // this.allAdsList.add(adData);
     }
 
     public void addNewMeeting(int adId, String meetingTime, String customerName) {
@@ -71,33 +74,37 @@ public class AdHandler {
         }
     }
 
-    // public boolean isValidMeetingTime(LocalTime timeToCheck) {
-    //     // * - For meetings hours: 10AM - 12PM, 2PM-3PM, 6PM-8PM
-
-    //     if (timeToCheck.isAfter(LocalTime.of(10, 0)) && timeToCheck.isBefore(LocalTime.of(12, 0))) {
-    //         return true;
-    //     } else if (timeToCheck.isAfter(LocalTime.of(14, 0)) && timeToCheck.isBefore(LocalTime.of(15, 0))) {
-    //         return true;
-    //     } else if (timeToCheck.isAfter(LocalTime.of(18, 0)) && timeToCheck.isBefore(LocalTime.of(20, 0))) {
-    //         return true;
-    //     }
-
-    //     return false;
-    // }
-
-    
     public boolean isValidMeetingTime(LocalTime timeToCheck) {
         // * - For meetings hours: 10AM - 12PM, 2PM-3PM, 6PM-8PM
-        return isBetween(timeToCheck, LocalTime.of(10, 0), LocalTime.of(12, 0))
-            || isBetween(timeToCheck, LocalTime.of(14, 0), LocalTime.of(15, 0))
-            || isBetween(timeToCheck, LocalTime.of(18, 0), LocalTime.of(20, 0));
+
+        if (timeToCheck.isAfter(LocalTime.of(10, 0)) && timeToCheck.isBefore(LocalTime.of(12, 0))) {
+            return true;
+        } else if (timeToCheck.isAfter(LocalTime.of(14, 0)) && timeToCheck.isBefore(LocalTime.of(15, 0))) {
+            return true;
+        } else if (timeToCheck.isAfter(LocalTime.of(18, 0)) && timeToCheck.isBefore(LocalTime.of(20, 0))) {
+            return true;
+        }
+
+        return false;
+    }
+
+    // TODO: To be uncommented in M2
+    // Comment out isValidMeetingTime, and rename below method to isValidMeetingTime()
     
-    }
+    // public boolean isValidMeetingTimeRefactored(LocalTime timeToCheck) {
+    //     // * - For meetings hours: 10AM - 12PM, 2PM-3PM, 6PM-8PM
+    //     return isBetween(timeToCheck, LocalTime.of(10, 0), LocalTime.of(12, 0))
+    //         || isBetween(timeToCheck, LocalTime.of(14, 0), LocalTime.of(15, 0))
+    //         || isBetween(timeToCheck, LocalTime.of(18, 0), LocalTime.of(20, 0));
+    
+    // }
 
-    public boolean isBetween(LocalTime timeToCheck, LocalTime startTime, LocalTime endTime) {
-        return (timeToCheck.isBefore(startTime)) && timeToCheck.isAfter(endTime);
-    }
+    // public boolean isBetween(LocalTime timeToCheck, LocalTime startTime, LocalTime endTime) {
+    //     return (timeToCheck.isBefore(startTime)) && timeToCheck.isBefore(endTime);
+    // }
 
+
+    // TODO - Code to be checked in M5 - Don't use system specific code
     /*
     public void addNewAdInputLocalDateTime(String description, String type, int sellerID, LocalDateTime localDateTime) throws FileNotFoundException {
         Seller seller = sellerMap.get(sellerID);
@@ -136,32 +143,33 @@ public class AdHandler {
 
 
     
-    public void addNewAdRefactored(String description, String type, 
-        int sellerID, LocalDateTime date) throws FileNotFoundException {
-        Seller seller = sellerMap.get(sellerID);
+    // TODO: Code to be checked in Milestone 5 - Writing Testable code
 
-        validateDescription(description);
-        validateType(type);
+    // public void addNewAdRefactored(String description, String type, 
+    //     int sellerID, LocalDateTime date) throws FileNotFoundException {
+    //     Seller seller = sellerMap.get(sellerID);
 
-        AdData adData = new AdData(description, type, seller, date);
-        allAdsList.add(adData);
+    //     validateDescription(description);
+    //     validateType(type);
+
+    //     AdData adData = new AdData(description, type, seller, date);
+    //     allAdsList.add(adData);
         
-    }
+    // }
 
-    private void validateDescription(String description) {
-        if (description.length() > 50) {
-            throw new RuntimeException("\nDescription length should be less than 50");
-        }
-    }
+    // private void validateDescription(String description) {
+    //     if (description.length() > 50) {
+    //         throw new RuntimeException("\nDescription length should be less than 50");
+    //     }
+    // }
 
-    private void validateType(String type) {
-        if (typesList.contains(type) == false) {
-            String msg = "\nInvalid Ad type entered. Supported are " 
-                + this.typesList.toString();
-            throw new RuntimeException(msg);
-        }
-    }
-
+    // private void validateType(String type) {
+    //     if (typesList.contains(type) == false) {
+    //         String msg = "\nInvalid Ad type entered. Supported are " 
+    //             + this.typesList.toString();
+    //         throw new RuntimeException(msg);
+    //     }
+    // }
     
     private List<String> readAdTypes(String filePath) {
         List<String> list = new ArrayList<>();
@@ -178,11 +186,9 @@ public class AdHandler {
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
-   
-
         return list;
     }
-    
+
     public List<AdData> getAllAds() {
         return this.allAdsList;
     }
