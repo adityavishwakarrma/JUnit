@@ -241,4 +241,21 @@ public class AdHandler {
         this.sellerMap = sellerMap;
     }
 
+ 
+    // private Map<Integer, Seller> readsellerMap(String filePath) throws FileNotFoundException {
+    //     File typesFile = new File(filePath);
+    //     Scanner scanner = new Scanner(typesFile);
+
+    //     Seller seller;
+    //     Map<Integer, Seller> sellers = new HashMap<>();
+
+    //     while(scanner.hasNext()) {
+    //         String sellerName = scanner.next().trim();
+    //         seller = new Seller(sellerName);
+    //         sellers.put(seller.getID(), seller);
+    //     }
+
+    //     return sellers;
+    // }
+
 }
