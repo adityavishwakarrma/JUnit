@@ -54,11 +54,11 @@ public class AdHandler {
 
         AdData adData = new AdData(description, type, seller, LocalDateTime.now());
 
-        List<AdData> list = new ArrayList<>();
-        list.add(adData);
-        this.allAdsList = list;
+        // List<AdData> list = new ArrayList<>();
+        // list.add(adData);
+        // this.allAdsList = list;
 
-        // this.allAdsList.add(adData);
+        this.allAdsList.add(adData);
     }
 
     public void addNewMeeting(int adId, String meetingTime, String customerName) {
